@@ -1,0 +1,344 @@
+body {
+  background: linear-gradient(180deg, #dbeafe 0%, #f8fafc 50%, #e5e7eb 100%);
+}
+
+.hero-section {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 30px;
+  border-radius: 12px;
+}
+
+.offer-strip {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: #dc3545;
+  color: #fff;
+  text-align: center;
+  padding: 12px;
+  z-index: 999;
+}
+
+/* service cards */
+.service-card {
+  background: #f5f5f5;
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  height: 100%;
+}
+
+.service-card:hover {
+  transform: translateY(-4px);
+}
+
+.service-img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+}
+
+.service-title {
+  padding: 12px;
+  font-weight: 600;
+  text-align: center;
+  font-size: 14px;
+  background: #ac9e9e4b;
+}
+
+/* estimate */
+/*  */
+/*  */
+
+.product-card {
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.3s;
+  background: #fff;
+}
+
+.product-card img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.product-card h6 {
+  margin: 10px 0 5px;
+  font-weight: 600;
+}
+
+.product-card p {
+  color: #dc3545;
+  font-weight: bold;
+}
+
+.product-card.active {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.2);
+}
+
+/* price.jsx */
+/*  */
+/*  */
+
+.combo-card {
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  transition: all 0.35s ease;
+  position: relative; /* VERY IMPORTANT */
+}
+
+.popular-badge {
+  position: absolute;
+  top: 5px;
+  right: 15px;
+  background: #0d6efd;
+  color: #fff;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 20px;
+  z-index: 10;
+}
+.combo-card.popular {
+  transform: scale(1.05);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+}
+
+.combo-header {
+  padding: 25px;
+  color: #fff;
+}
+
+.combo-header h4 {
+  margin-bottom: 10px;
+}
+
+.combo-header h3 {
+  font-weight: bold;
+}
+
+.combo-list {
+  list-style: none;
+  padding: 20px;
+  margin: 0;
+}
+
+.combo-list li {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+.combo-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* THEMES */
+.combo-card.basic .combo-header {
+  background: linear-gradient(135deg, #000, #cc6b32);
+}
+
+.combo-card.standard .combo-header {
+  background: linear-gradient(135deg, #000, #7a7a7a);
+}
+
+.combo-card.premium .combo-header {
+  background: linear-gradient(135deg, #000, #f7c600);
+  border: 2px solid #f7c600;
+}
+
+/* features */
+.features-section {
+  padding: 80px 0;
+}
+
+.section-title {
+  text-align: center;
+  font-weight: 700;
+  margin-bottom: 50px;
+}
+
+.feature-card {
+  background: linear-gradient(135deg, #ffffff, #f1f5f9);
+  border-radius: 16px;
+  padding: 30px 20px;
+  text-align: center;
+  height: 100%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  transition: all 0.35s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.feature-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0d6efd, #60a5fa);
+  color: #fff;
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px;
+}
+
+.feature-card h6 {
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.feature-card p {
+  font-size: 14px;
+  color: #555;
+}
+/* how it works */
+.how-section {
+  padding: 80px 0;
+  background: linear-gradient(180deg, #dbeafe 0%, #f8fafc 50%, #e5e7eb 100%);
+}
+
+.step-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 30px 20px;
+  text-align: center;
+  height: 100%;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  transition: 0.35s;
+}
+
+.step-card:hover {
+  transform: translateY(-8px);
+}
+
+.step-number {
+  font-size: 32px;
+  font-weight: 800;
+  color: #0d6efd;
+  margin-bottom: 10px;
+}
+
+.step-card h6 {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.step-card p {
+  font-size: 14px;
+  color: #555;
+}
+/*  */
+/* stickycta */
+/*  */
+
+.floating-actions {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  z-index: 9999;
+}
+
+.floating-actions a{
+  text-decoration: none;
+
+}
+/* PERFECT ROUND BUTTON */
+.floating-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+  transition: all 0.3s ease;
+  color: #fff;
+}
+
+/* INDIVIDUAL COLORS */
+.estimate-btn {
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
+}
+
+.whatsapp-btn {
+  background: linear-gradient(135deg, #16a34a, #22c55e);
+}
+
+.top-btn {
+  background: linear-gradient(135deg, #111827, #374151);
+}
+
+/* HOVER EFFECT */
+.floating-btn:hover {
+  transform: translateY(-6px) scale(1.05);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+}
+
+/* MOBILE ADJUSTMENT */
+@media (max-width: 768px) {
+  .floating-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+  }
+}
+
+/* trustStatus */
+/*  */
+/*  */
+.trust-section {
+  background: linear-gradient(135deg, #dc3545, #2564eb66);
+  color: #fff;
+  padding: 60px 0;
+  border-bottom: white 4px solid;
+}
+
+.trust-section h2 {
+  font-weight: 800;
+}
+
+.trust-section p {
+  opacity: 0.9;
+}
+
+#BAimg {
+  width: 100%;
+  height: 550px;
+}
