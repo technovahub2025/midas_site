@@ -1,9 +1,6 @@
-import { useState } from "react";
 import EstimateModal from "./EstimateModal";
 
-const OfferForm = () => {
-  const [showEstimate, setShowEstimate] = useState(false);
-
+const OfferForm = ({ showEstimate, onOpenEstimate, onCloseEstimate }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const phone = "919677973676";
@@ -42,7 +39,7 @@ const OfferForm = () => {
 
               <button
                 className="btn btn-outline-primary w-100"
-                onClick={() => setShowEstimate(true)}
+                onClick={onOpenEstimate}
               >
                 Get Estimate
               </button>
@@ -53,7 +50,7 @@ const OfferForm = () => {
 
       <EstimateModal
         show={showEstimate}
-        onClose={() => setShowEstimate(false)}
+        onClose={onCloseEstimate}
       />
     </>
   );

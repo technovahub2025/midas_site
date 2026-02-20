@@ -1,3 +1,4 @@
+import { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import HeroVideo from "./HeroVideo";
@@ -11,19 +12,37 @@ import Features from './Features';
 import FloatingActions from './FloatingActions';
 import TrustStats from './TrustStats';
 import BeforeAfter from './BeforeAfter';
+import ContactFooter from './ContactFooter';
 
 function App() {
+  const [showEstimate, setShowEstimate] = useState(false);
+  const bodyLines = [1, 2, 3, 4, 5];
+
   return (
     <>
-      <HeroVideo />
+      <div className="body-lines" aria-hidden="true">
+        <div className="body-lines-container">
+          {bodyLines.map((line) => (
+            <span key={line} className="line">
+              <span className="dot" />
+            </span>
+          ))}
+        </div>
+      </div>
+      <HeroVideo onOpenEstimate={() => setShowEstimate(true)} />
       <Features />
-      <OfferForm />
+      <OfferForm
+        showEstimate={showEstimate}
+        onOpenEstimate={() => setShowEstimate(true)}
+        onCloseEstimate={() => setShowEstimate(false)}
+      />
       <HowItWorks />
       <PriceList />
       <BeforeAfter />
       <Services />
       <OfferStrip />
       <TrustStats />
+      <ContactFooter />
       <FloatingActions />
     </>
   );

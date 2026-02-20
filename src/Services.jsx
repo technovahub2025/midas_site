@@ -1,18 +1,20 @@
+import { serviceImages } from "./serviceImages";
+
 const services = [
-  { title: "Aluminium Partition", img: "/services/alumininiem.webp" },
-  { title: "Armstrong Ceiling", img: "/services/Armstrong.webp" },
+  { title: "Aluminium Partition", img: serviceImages.aluminiumPartition },
+  { title: "Armstrong Ceiling", img: serviceImages.armstrongCeiling },
 
-  { title: "Toughened Glass", img: "/services/glasss.webp" },
-  { title: "Wardrobe", img: "/services/ward.webp" },
+  { title: "Toughened Glass", img: serviceImages.toughenedGlass },
+  { title: "Wardrobe", img: serviceImages.wardrobe },
 
-  { title: "Modular Kitchen", img: "/services/kichan.webp" },
-  { title: "Imported Wallpapers", img: "/services/wall (2).webp" },
+  { title: "Modular Kitchen", img: serviceImages.modularKitchen },
+  { title: "Imported Wallpapers", img: serviceImages.importedWallpapers },
 
-  { title: "Turnkey Projects", img: "/services/turkey.webp" },
-  { title: "Vinyl Flooring", img: "/services/vinyl (4).webp" },
+  { title: "Turnkey Projects", img: serviceImages.turnkeyProjects },
+  { title: "Vinyl Flooring", img: serviceImages.vinylFlooring },
 
-  { title: "Blinds", img: "/services/blind (2).webp" },
-  { title: "UPVC Doors & Windows", img: "/services/upvc.webp" },
+  { title: "Blinds", img: serviceImages.blinds },
+  { title: "UPVC Doors & Windows", img: serviceImages.upvcDoorsWindows },
 ];
 
 
