@@ -59,7 +59,7 @@ Please contact me for further details.
   };
 
   return (
-    <section className="container my-5">
+    <section className="container my-5" id="priceBar">
       <h2 className="text-center mb-4">
         Interior Combo Packages
       </h2>

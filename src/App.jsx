@@ -17,10 +17,10 @@ function App() {
     <>
       <HeroVideo />
       <Features />
+      <OfferForm />
+      <HowItWorks />
       <PriceList />
       <BeforeAfter />
-      <HowItWorks />
-      <OfferForm />
       <Services />
       <OfferStrip />
       <TrustStats />

@@ -7,7 +7,7 @@ const STATS = [
 
 const TrustStats = () => {
   return (
-    <section className="trust-section">
+    <section className="trust-section" id="contactUs">
       <div className="container ">
         <div className="row text-center">
           {STATS.map((s, i) => (
