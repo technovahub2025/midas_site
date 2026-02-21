@@ -38,7 +38,7 @@ const COMBO_PACKAGES = [
   },
 ];
 
-const WHATSAPP_NUMBER = "918682057193";
+const WHATSAPP_NUMBER = "919092739393";
 
 const ComboPackages = () => {
   const sendWhatsAppMessage = (pkg) => {

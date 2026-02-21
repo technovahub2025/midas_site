@@ -2,7 +2,7 @@
 import { Modal, Button, Form } from "react-bootstrap";
 import { serviceImages } from "./serviceImages";
 
-const WHATSAPP_NUMBER = "919677973676";
+const WHATSAPP_NUMBER = "919092739393";
 
 const STEPS = ["Basic Details", "Category", "Products", "Finish"];
 
