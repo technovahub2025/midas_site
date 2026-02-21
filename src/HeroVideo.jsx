@@ -11,13 +11,30 @@ const HeroVideo = ({ onOpenEstimate }) => {
     closeMenu();
     onOpenEstimate?.();
   };
+  const goToDiscountForm = () => {
+    closeMenu();
+    setShowPopup(false);
+    document.getElementById("leadForm")?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
 
   return (
-    <section className="hero-section" id="home">
-      <nav className="hero-nav">
+    <section className={`hero-section ${menuOpen ? "menu-open" : ""}`} id="home">
+      <nav className={`hero-nav ${menuOpen ? "menu-open" : ""}`}>
         <div className="hero-logo-shell">
           <img src={logoImg} alt="Midas Interiors & Traders" className="hero-nav-logo" />
         </div>
+
+        <button
+          type="button"
+          className="hero-nav-mobile-cta"
+          aria-label="Open estimator"
+          onClick={openEstimator}
+        >
+          <span />
+        </button>
 
         <button
           type="button"
@@ -64,7 +81,7 @@ const HeroVideo = ({ onOpenEstimate }) => {
           <span className="badge bg-danger mb-3">Flat 50% OFF</span>
           <h1>Professional Interior and Architecture Work</h1>
           <p>Free Site Visit | Premium Materials | Skilled Professionals</p>
-          <button type="button" className="btn btn-primary btn-lg mt-3" onClick={openEstimator}>
+          <button type="button" className="btn btn-primary btn-lg mt-3" onClick={goToDiscountForm}>
             Get 50% OFF Quote
           </button>
         </div>

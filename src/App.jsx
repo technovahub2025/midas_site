@@ -43,7 +43,7 @@ function App() {
       <OfferStrip />
       <TrustStats />
       <ContactFooter />
-      <FloatingActions />
+      <FloatingActions onOpenEstimate={() => setShowEstimate(true)} />
     </>
   );
 }
