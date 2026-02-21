@@ -516,10 +516,85 @@ html {
   margin: 0;
 }
 
+.combo-sqft-group {
+  padding: 16px 20px 6px;
+}
+
+.combo-sqft-input {
+  height: 46px;
+  font-weight: 600;
+}
+
+.combo-estimate-total {
+  margin-top: 10px;
+  font-size: 0.95rem;
+  color: #1f2937;
+}
+
 .combo-list li {
   padding: 8px 0;
   border-bottom: 1px solid #eee;
   font-size: 14px;
+}
+
+.combo-card .combo-list li {
+  position: relative;
+  padding: 10px 10px 10px 30px;
+  border-radius: 8px;
+  transition: background-color 0.22s ease, transform 0.22s ease, color 0.22s ease;
+}
+
+.combo-card .combo-list li .combo-item-label {
+  display: block;
+}
+
+.combo-card .combo-list li::before {
+  content: "✔";
+  position: absolute;
+  left: 10px;
+  top: 13px;
+  transform: none;
+  font-size: 14px;
+  font-weight: 700;
+  color: #6b4fd3;
+  transition: color 0.22s ease;
+}
+
+.combo-card .combo-list li:hover {
+  background: rgba(245, 158, 11, 0.12);
+  color: #111827;
+  transform: translateX(3px);
+}
+
+.combo-card .combo-list li:hover::before {
+  color: #f59e0b;
+}
+
+.combo-hover-panel {
+  display: none;
+  margin-top: 8px;
+  margin-left: -12px;
+  border: 1px solid rgba(17, 24, 39, 0.16);
+  background: #f8fafc;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.combo-hover-row {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(17, 24, 39, 0.1);
+  font-size: 0.95rem;
+  color: #374151;
+}
+
+.combo-hover-row:last-child {
+  border-bottom: none;
+}
+
+.combo-card .combo-list li:hover .combo-hover-panel,
+.combo-card .combo-list li:focus-within .combo-hover-panel,
+.combo-card .combo-list li:active .combo-hover-panel {
+  display: block;
 }
 
 .combo-card:hover {
@@ -1764,6 +1839,10 @@ a {
     padding: 14px 14px 10px;
   }
 
+  .combo-sqft-group {
+    padding: 12px 14px 6px;
+  }
+
   .service-img {
     height: 170px;
   }
@@ -2234,5 +2313,197 @@ a {
   .hero-content .btn-lg {
     padding: 0.46rem 0.75rem;
     font-size: 0.84rem;
+  }
+}
+
+/* UNIVERSAL RESPONSIVE LAYER */
+@media (max-width: 1200px) {
+  .container {
+    max-width: min(96vw, 1120px);
+  }
+
+  .hero-nav {
+    width: min(96vw, 1160px);
+  }
+}
+
+@media (max-width: 992px) {
+  .container {
+    max-width: min(96vw, 940px);
+  }
+
+  .row.g-4 {
+    --bs-gutter-y: 1.2rem;
+    --bs-gutter-x: 1rem;
+  }
+
+  .combo-card,
+  .feature-card,
+  .step-card,
+  .service-card {
+    border-radius: 12px;
+  }
+
+  .modal-xl {
+    --bs-modal-width: min(95vw, 980px);
+  }
+
+  .estimate-wizard {
+    padding: 0.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
+  .section-title {
+    font-size: clamp(1.35rem, 5.2vw, 1.9rem);
+  }
+
+  .hero-content {
+    backdrop-filter: blur(4px);
+  }
+
+  .combo-hover-panel {
+    margin-left: 0;
+  }
+
+  .combo-hover-row {
+    font-size: 0.9rem;
+    line-height: 1.35;
+  }
+
+  .estimate-stepper {
+    gap: 10px;
+  }
+
+  .estimate-step small {
+    font-size: 0.88rem;
+  }
+
+  .estimate-summary-card p,
+  .estimate-total-box,
+  .estimate-total-box small {
+    font-size: 0.95rem;
+  }
+
+  .table-responsive .table {
+    font-size: 0.92rem;
+  }
+
+  .footer-links li,
+  .footer-help-text,
+  .footer-news-item p {
+    font-size: 0.96rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .container {
+    padding-left: max(12px, env(safe-area-inset-left));
+    padding-right: max(12px, env(safe-area-inset-right));
+  }
+
+  .hero-section {
+    min-height: 510px;
+  }
+
+  .hero-content {
+    width: 95vw;
+    max-height: 54svh;
+  }
+
+  .hero-content h1 {
+    letter-spacing: 0;
+  }
+
+  .combo-header h3 {
+    font-size: 1.85rem;
+  }
+
+  .combo-list li {
+    font-size: 0.96rem;
+  }
+
+  .combo-card .btn-primary,
+  #leadForm .btn-danger,
+  #leadForm .btn-outline-primary,
+  .estimate-wizard .btn {
+    min-height: 44px;
+  }
+
+  .floating-actions {
+    right: 10px;
+    bottom: 78px;
+  }
+
+  .floating-btn {
+    width: 46px;
+    height: 46px;
+    font-size: 18px;
+  }
+
+  .modal-dialog {
+    margin: 0.55rem;
+  }
+
+  .modal-content {
+    border-radius: 12px;
+  }
+
+  .modal-header,
+  .modal-body {
+    padding: 0.8rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .hero-logo-shell {
+    flex-basis: 62%;
+  }
+
+  .hero-nav-toggle {
+    right: 6px;
+  }
+
+  .hero-nav.menu-open .hero-nav-inner,
+  .hero-nav-inner.open {
+    top: 52px;
+  }
+
+  .estimate-step-dot {
+    width: 29px;
+    height: 29px;
+    font-size: 0.9rem;
+  }
+
+  .estimate-step small {
+    font-size: 0.82rem;
+  }
+}
+
+@media (orientation: landscape) and (max-width: 1024px) and (max-height: 600px) {
+  .hero-section {
+    min-height: 360px;
+  }
+
+  .hero-content {
+    max-height: 45svh;
+  }
+
+  .floating-actions {
+    bottom: 14px;
+  }
+
+  .modal-dialog {
+    margin: 0.35rem auto;
+  }
+
+  .modal-body {
+    max-height: calc(100svh - 112px);
+    overflow-y: auto;
   }
 }

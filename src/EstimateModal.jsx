@@ -1,6 +1,8 @@
-﻿import { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
+import { jsPDF } from "jspdf";
 import { serviceImages } from "./serviceImages";
+import logoImg from "./assets/middaslogo.webp";
 
 const WHATSAPP_NUMBER = "919092739393";
 
@@ -54,6 +56,33 @@ const INITIAL_BASIC_DETAILS = {
   firstFloor: "",
   secondFloor: "",
 };
+
+let cachedLogoDataUrl = "";
+
+const getLogoDataUrl = () =>
+  new Promise((resolve, reject) => {
+    if (cachedLogoDataUrl) {
+      resolve(cachedLogoDataUrl);
+      return;
+    }
+
+    const img = new Image();
+    img.src = logoImg;
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) {
+        reject(new Error("Canvas context unavailable"));
+        return;
+      }
+      ctx.drawImage(img, 0, 0);
+      cachedLogoDataUrl = canvas.toDataURL("image/png");
+      resolve(cachedLogoDataUrl);
+    };
+    img.onerror = () => reject(new Error("Failed to load logo image"));
+  });
 
 const EstimateModal = ({ show, onClose }) => {
   const [stepIndex, setStepIndex] = useState(0);
@@ -198,6 +227,158 @@ const EstimateModal = ({ show, onClose }) => {
 
     const message = encodeURIComponent(lines.join("\n"));
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, "_blank");
+  };
+
+  const downloadEstimatePdf = async () => {
+    if (!selectedCategoryDetails.length) {
+      window.alert("Please select at least one category and product to generate the PDF.");
+      return;
+    }
+
+    const doc = new jsPDF({ unit: "pt", format: "a4" });
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const margin = 22;
+    const contentWidth = pageWidth - margin * 2;
+
+    const drawHeader = () => {
+      doc.setFillColor(17, 24, 39);
+      doc.rect(0, 0, pageWidth, 72, "F");
+      doc.setFillColor(245, 158, 11);
+      doc.rect(0, 72, pageWidth, 4, "F");
+
+      doc.setFillColor(255, 255, 255);
+      doc.roundedRect(margin, 16, 128, 42, 8, 8, "F");
+
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(18);
+      doc.setTextColor(255, 255, 255);
+      doc.text("Midas Interiors - Estimate", 166, 34);
+
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(10);
+      doc.setTextColor(230, 233, 238);
+      doc.text(
+        `Date: ${new Date().toLocaleDateString("en-IN", {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+        })}`,
+        pageWidth - margin,
+        34,
+        { align: "right" }
+      );
+    };
+
+    try {
+      const logoDataUrl = await getLogoDataUrl();
+      drawHeader();
+      doc.addImage(logoDataUrl, "PNG", margin + 8, 22, 112, 30);
+    } catch {
+      drawHeader();
+    }
+
+    const infoY = 96;
+    const infoH = 102;
+    doc.setDrawColor(236, 196, 125);
+    doc.setLineWidth(0.8);
+    doc.roundedRect(margin, infoY, contentWidth, infoH, 10, 10, "S");
+
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(12);
+    doc.setTextColor(35, 42, 53);
+    doc.text(`Name: ${basicDetails.name || "-"}`, margin + 14, infoY + 24);
+    doc.text(`Mobile: ${basicDetails.mobile || "-"}`, margin + 14, infoY + 44);
+    doc.text(`Site: ${basicDetails.siteLocation || "-"}`, margin + 14, infoY + 64);
+    doc.text(`Total Built-up: ${totalBuiltUpArea} sq.ft`, margin + 14, infoY + 84);
+
+    const headerY = infoY + infoH + 16;
+    const tableHeaderH = 34;
+    const colW = [48, 150, 247, contentWidth - 48 - 150 - 247];
+    const headers = ["S.No", "Category", "Selected Product", "Rate / sq.ft"];
+
+    const drawTableHeader = (y) => {
+      let x = margin;
+      headers.forEach((label, idx) => {
+        doc.setFillColor(236, 227, 204);
+        doc.setDrawColor(190, 196, 204);
+        doc.rect(x, y, colW[idx], tableHeaderH, "FD");
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(11);
+        doc.setTextColor(24, 24, 24);
+        doc.text(label, x + 8, y + 22);
+        x += colW[idx];
+      });
+    };
+
+    drawTableHeader(headerY);
+    let cursorY = headerY + tableHeaderH;
+
+    selectedCategoryDetails.forEach((cat, index) => {
+      const picked = selectedProducts[cat.id];
+      const rowValues = [
+        `${index + 1}`,
+        cat.name,
+        `${picked?.name || "-"} (${picked?.grade || "-"})`,
+        `Rs.${picked?.rate || 0}`,
+      ];
+
+      const wrapped = rowValues.map((value, idx) => doc.splitTextToSize(value, Math.max(colW[idx] - 12, 24)));
+      const lines = Math.max(...wrapped.map((item) => item.length));
+      const rowH = Math.max(28, lines * 13 + 10);
+
+      if (cursorY + rowH > pageHeight - 140) {
+        doc.addPage();
+        drawTableHeader(54);
+        cursorY = 54 + tableHeaderH;
+      }
+
+      let x = margin;
+      wrapped.forEach((text, idx) => {
+        doc.setFillColor(255, 255, 255);
+        doc.setDrawColor(190, 196, 204);
+        doc.rect(x, cursorY, colW[idx], rowH, "FD");
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(11);
+        doc.setTextColor(34, 41, 50);
+        doc.text(text, x + 8, cursorY + 18);
+        x += colW[idx];
+      });
+
+      cursorY += rowH;
+    });
+
+    const totalBoxY = cursorY + 16 > pageHeight - 120 ? 54 : cursorY + 16;
+    if (totalBoxY === 54) {
+      doc.addPage();
+    }
+
+    const y = totalBoxY === 54 ? 54 : totalBoxY;
+    doc.setDrawColor(236, 196, 125);
+    doc.roundedRect(margin, y, contentWidth, 92, 10, 10, "S");
+
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(11);
+    doc.setTextColor(40, 48, 60);
+    doc.text(`Combined Material Rate: Rs.${totalRate} / sq.ft`, margin + 14, y + 24);
+
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(18);
+    doc.setTextColor(231, 138, 0);
+    doc.text(`Total Estimate: Rs.${Math.round(totalEstimate).toLocaleString("en-IN")}`, margin + 14, y + 52);
+
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
+    doc.setTextColor(70, 70, 70);
+    doc.text("*Approximate estimate. Final cost may vary after site visit.", margin + 14, y + 74);
+
+    doc.setDrawColor(222, 226, 234);
+    doc.line(margin, pageHeight - 32, pageWidth - margin, pageHeight - 32);
+    doc.setFontSize(9);
+    doc.setTextColor(112, 118, 128);
+    doc.text("Midas Interiors & Traders", margin, pageHeight - 18);
+
+    doc.save(`building-estimate-${Date.now()}.pdf`);
   };
 
   return (
@@ -408,9 +589,14 @@ const EstimateModal = ({ show, onClose }) => {
               <small>*Approximate estimate. Final cost may vary after site visit.</small>
             </div>
 
-            <Button variant="success" className="w-100 mt-3" onClick={sendToWhatsApp}>
-              Send Estimate to WhatsApp
-            </Button>
+            <div className="d-grid gap-2 mt-3">
+              <Button variant="primary" onClick={downloadEstimatePdf}>
+                Get PDF
+              </Button>
+              <Button variant="success" onClick={sendToWhatsApp}>
+                Send Estimate to WhatsApp
+              </Button>
+            </div>
           </div>
         )}
 
@@ -435,6 +621,11 @@ const EstimateModal = ({ show, onClose }) => {
 };
 
 export default EstimateModal;
+
+
+
+
+
 
 
 
